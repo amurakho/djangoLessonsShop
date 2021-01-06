@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Search">
+    </form>
+    <hr>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" value="Filter">
+    </form>
+    <hr>
+    {% for product in filter.qs %}
+        <a href="{% url 'product_detail' product.slug %}"><h4>{{ product.name }}</h4></a>
+        <h5>Цена: {{ product.price }}</h5>
+
+        {% if product.in_stock %}
+            <h5>В наличии</h5>
+        {% else %}
+            <h5>Нет в наличии</h5>
+        {% endif %}
+
+        {% if product.count < 10 and product.count > 0 %}
+            <h6>Товар заканчивается</h6>
+        {% endif %}
+        <hr>
+    {% endfor %}
+{% endblock %}

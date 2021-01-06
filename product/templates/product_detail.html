@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'product_list' %}">Home</a>
+    <h2>{{ product.name }}</h2>
+    <h3>{{ product.price }}</h3>
+    {% if product.in_stock %}
+        <h5>В наличии</h5>
+    {% else %}
+        <h5>Нет в наличии</h5>
+    {% endif %}
+
+    {% if product.count < 10 and product.count > 0 %}
+        <h6>Товар заканчивается</h6>
+    {% endif %}
+
+    <img src="{{ product.image.url }}" width="500px">
+
+    <p>{{ product.description }}</p>
+    <h6>Rating: {{ product.rating }}</h6>
+    <h6>Code: {{ product.code }}</h6>
+    <form method="post"  action="{% url 'to_bucket' %}" id="buy-form">
+        {{ count_form.as_p }}
+        <input type="submit" name="send" data-product="{{ product.slug }}" id="submit_button">
+
+    </form>
+    <hr>
+    <form>
+        {{ form }}
+        <input type="submit" name="Оставить комментарий">
+    </form>
+
+    {% for review in reviews %}
+        {% csrf_token %}
+        <h4>Author: {{ review.author.name }}</h4>
+        <p>{{ review.text }}</p>
+        <h3>Rating: {{ review.stars }}</h3>
+    {% endfor %}
+{% endblock %}
+

@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+    {% if bucket %}
+        <a href="{% url 'bucket_view' %}"><h5>To bucket({{ bucket.count }})</h5></a>
+    {% endif %}
+
+    <a href="{% url 'subscribe' %}"><h5>Subscribe</h5></a>
+
+    {%  block content %}
+
+    {% endblock %}
+    <hr>
+    {% for elem in viwered_prodcuts %}
+        <img src="{{ elem.image.url }}" width="50px">
+        <h6>{{ elem.name }}</h6>
+        <h6>{{ elem.price }}</h6>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'product_list' %}">Home</a>
+
+    {% for product in bucket.productinbucket_set.all %}
+        <h3>Товар: {{ product.product.name }}</h3>
+        <h3>Количество: {{ product.count }}</h3>
+        <h3>Цена: {{ product.full_price }}</h3>
+    {% endfor %}
+
+    <h2>Полна цена: {{ bucket.price }}</h2>
+{% endblock %}
